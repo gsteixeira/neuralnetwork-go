@@ -1,4 +1,4 @@
-// Python implementation of a simple Feedforward Neural Network
+// Go implementation of a simple Feedforward Neural Network
 //
 // Author: Gustavo Selbach Teixeira (gsteixei@gmail.com)
 //
