@@ -1,7 +1,7 @@
 // A simple feed forward XOR neural network in Go
 //
 //  Allows for multiple hidden layers
-// 
+//
 // Author: Gustavo Selbach Teixeira
 //
 
@@ -136,26 +136,18 @@ func (nn *NeuralNetwork) Forward_pass () {
 
 // Backpropagation learning process
 func (nn *NeuralNetwork) Back_propagation (outputs []float64) {
-    var last_hidden_layer, k int
-    // calculate the deltas
+    // calculate the deltas and update weights
     nn.calc_delta_output(outputs)
-    last_hidden_layer = len(nn.hidden_layer)-1
-    k = last_hidden_layer
-    // From output layer to the last of the hidden layers
+    k := len(nn.hidden_layer)-1 // the last of hidden layers
     nn.calc_deltas(nn.output_layer, nn.hidden_layer[k])
+    nn.update_weights(nn.output_layer, nn.hidden_layer[k])
     // Run though the hidden layers. If theres more than 1.
     for k > 0 {
         nn.calc_deltas(nn.hidden_layer[k], nn.hidden_layer[k-1])
-        k -= 1
-    }
-    // Update weights and bias
-    k = last_hidden_layer
-    nn.update_weights(nn.output_layer, nn.hidden_layer[k])
-    for k > 0 {
         nn.update_weights(nn.hidden_layer[k], nn.hidden_layer[k-1])
         k -= 1
     }
-    // from output to hidden layer
+    // from the first of hidden_layer's to input_layer
     nn.update_weights(nn.hidden_layer[k], nn.input_layer)
 }
 
